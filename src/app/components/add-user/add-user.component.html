@@ -1,0 +1,82 @@
+<h3>Create a User</h3>
+<div [hidden]="submitted" style="width: 100%;">
+<form (ngSubmit)="onSubmit()" #addForm="ngForm">
+
+    <div class="row">
+      <div class="form-group col-6">
+        <label>FirstName</label>
+        <input type="text" class="form-control" placeholder="Name"
+               required name="firstname" [(ngModel)]="user.firstname" id="firstname" #firstname="ngModel">
+        <div [hidden]="firstname.valid || firstname.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label>LastName</label>
+        <input type="text" class="form-control" placeholder="LastName"
+               required name="lastname" [(ngModel)]="user.lastname" id="lastname" #lastname="ngModel">
+        <div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">
+          LastName is required
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-6">
+        <label>Country</label>
+        <input type="text" class="form-control" placeholder="Country"
+               required name="country" [(ngModel)]="user.country" id="country" #country="ngModel">
+        <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
+          Country is required
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label>Date of Birth</label>
+        <input type="date" class="form-control" #birthdate="ngModel" required
+               name="birthdate" [(ngModel)]="user.birthdate" id="birthdate">
+        <div [hidden]="birthdate.valid || birthdate.pristine" class="alert alert-danger">
+          BirthDate is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Skills</label>
+      <select multiple class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.skills" [compareWith]="compareById">
+        <option *ngFor="let skill of skills" [ngValue]="skill">{{skill.name}}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-6">
+        <label>Role</label>
+        <select class="form-control" [ngModelOptions]="{standalone: true}" required
+                [(ngModel)]="user.role" [compareWith]="compareById" #role="ngModel">
+          <option *ngFor="let role of roles" [ngValue]="role">{{role.name}}</option>
+          <div [hidden]="role.valid || role.pristine" class="alert alert-danger">
+            Role is required
+          </div>
+        </select>
+      </div>
+
+      <div class="form-group col-6">
+        <label>Status</label>
+        <select class="form-control" [ngModelOptions]="{standalone: true}" required
+                [(ngModel)]="user.status" [compareWith]="compareById" #status="ngModel">
+          <option *ngFor="let status of statuses" [ngValue]="status">{{status.name}}</option>
+          <div [hidden]="status.valid || status.pristine" class="alert alert-danger">
+            Status is required
+          </div>
+        </select>
+      </div>
+    </div>
+
+
+  <button type="submit" class="btn btn-success" [disabled]="!addForm.form.valid">Submit</button>
+
+</form>
+</div>
+
+<div [hidden]="!submitted">
+  <h4>You submitted successfully!</h4>
+</div>

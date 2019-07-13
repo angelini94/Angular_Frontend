@@ -1,0 +1,52 @@
+<div *ngIf="user">
+<h2>{{ user.firstname | uppercase }} {{ user.lastname | uppercase}}</h2>
+<div>
+  <div class="row">
+    <div class="form-group col-6">
+      <label>FirstName</label>
+      <input type="text" [(ngModel)]="user.firstname" class="form-control" placeholder="Name">
+    </div>
+    <div class="form-group col-6">
+      <label>LastName</label>
+      <input type="text" [(ngModel)]="user.lastname" class="form-control" placeholder="LastName">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-6">
+      <label>Country</label>
+      <input type="text" [(ngModel)]="user.country" class="form-control" placeholder="Name">
+    </div>
+    <div class="form-group col-6">
+      <label>Date of Birth</label>
+      <input type="date" [(ngModel)]="user.birthdate" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Skills</label>
+    <select multiple class="form-control" [(ngModel)]="user.skills" [compareWith]="compareById">
+      <option *ngFor="let skill of skills" [ngValue]="skill">{{skill.name}}</option>
+    </select>
+  </div>
+
+  <div class="row">
+  <div class="form-group col-6">
+    <label>Role</label>
+    <select class="form-control" [(ngModel)]="user.role" [compareWith]="compareById">
+    <option *ngFor="let role of roles" [ngValue]="role">{{role.name}}</option>
+    </select>
+  </div>
+
+  <div class="form-group col-6">
+    <label>Status</label>
+    <select class="form-control" [(ngModel)]="user.status" [compareWith]="compareById">
+      <option *ngFor="let status of statuses" [ngValue]="status">{{status.name}}</option>
+    </select>
+  </div>
+  </div>
+
+</div>
+<button (click)="goBack()">go Back</button>
+<button (click)="save()">Save</button>
+</div>

@@ -1,0 +1,49 @@
+<div class="row">
+  <input class="form-control col-lg-8" type="text" name="search"
+         [(ngModel)]="searchText" autocomplete="off" placeholder="Search">
+  <div class="col-lg">
+    <select class="custom-select" [(ngModel)]="pageSize">
+      <option selected [ngValue]="5">Select Rows</option>
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="15">15</option>
+    </select>
+  </div>
+</div>
+<br>
+<ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [maxSize]="3"
+  [boundaryLinks]="true"
+  [collectionSize]="(items | filter: searchText )?.length">
+</ngb-pagination>
+<table class="table table-over">
+  <tr>
+    <th *ngFor="let column of headerTable"
+        (click)="column.orderr === true ? orderBy( column.columnName ) : ''"
+        [className]="column.columnName === current ? 'header': ''">
+      <i [className]="column.columnName === current ? arrow: ''"></i>
+      {{ column.columnLabel }}
+    </th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let item of items | filter: searchText |
+  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+    <td *ngFor="let column of headerTable">
+      {{ getColumn( item , column) }}
+    </td>
+    <td>
+      <app-button *ngFor="let button of buttons" [button]="button"
+                  [routerLink]="button.action+item.id"
+                  (click)="button.click ? delete(item) : null"></app-button>
+    </td>
+  </tr>
+</table>
+<ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [maxSize]="3"
+  [boundaryLinks]="true"
+  [collectionSize]="(items | filter: searchText )?.length">
+</ngb-pagination>
